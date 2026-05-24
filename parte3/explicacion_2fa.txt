@@ -1,0 +1,18 @@
+Para activar la autenticación 2FA, primero es necesario instalarse en algún dispositivo
+una aplicación de TOTP, como Google Authenticator.
+
+Luego, hay que conectarse al sistema mediante ssh y ejecutar el siguiente comando:
+
+    $ google-authenticator
+
+El comando va a hacer una serie de preguntas:
+
+1) Do you want authentication tokens to be time-based (y/n). Conviene responder que sí.
+Si se responde que no, se va a usar HOTP, en donde el código se calcula a partir de un
+contador que se incrementa cada vez que se genera un código. El problema con esto es que
+los contadores del servidor y del usuario se pueden dessincronizar. Si se responde que sí,
+se usa TOTP, en donde el código cambia cada 30 segundos automáticamente.
+
+2) Se va a mostrar un código QR que se tiene que escanear con la aplicación. En la
+aplicación va a aparecer un código que hay que escribir en la terminal, y hay que verificar
+que el código se marque como correcto
