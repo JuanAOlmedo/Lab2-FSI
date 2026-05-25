@@ -1,3 +1,17 @@
-surreta:surreta
-obilloni:123
-pbercoff:inatencion
+Obtuvimos tres contraseñas:
+1) surreta:surreta. La primera contraseña la obtuvimos con Hydra ejecutando el comando:
+hydra -L nombres-usuarios.txt -e nsr fpt://10.0.2.5.
+Este comando probó ingresar a cada usuario sin contraseña, con contraseña igual al nombre de
+usuario o con contraseña igual al nombre de usuario al revés.
+
+2) obilloni:123. El acceso por ftp con surreta nos permitió usar el archivo shadow.bak, que
+contenía los hash de contraseñas de varios usuarios. Con esto pudimos hacer un ataque offline
+con John the Ripper. Ejecutamos
+john shadow.bak --wordlist=passwords.txt
+donde passwords.txt es un archivo de contraseñas que se nos ocurrieron que podían ser posibles
+(por ejemplo, password, 1234, 123, 0000) y de casualidad obtuvimos la de obilloni.
+
+3) pbercoff:inatencion. De la misma forma, ejecutamos
+john shadow.bak --wordlist=dic.txt
+con el diccionario provisto y encontramos la última contraseña, que fue la que nos dio acceso
+ssh.
