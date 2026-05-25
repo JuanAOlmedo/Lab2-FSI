@@ -10,9 +10,37 @@ El comando va a hacer una serie de preguntas:
 1) Do you want authentication tokens to be time-based (y/n). Conviene responder que sí.
 Si se responde que no, se va a usar HOTP, en donde el código se calcula a partir de un
 contador que se incrementa cada vez que se genera un código. El problema con esto es que
-los contadores del servidor y del usuario se pueden dessincronizar. Si se responde que sí,
-se usa TOTP, en donde el código cambia cada 30 segundos automáticamente.
+los contadores del servidor y del usuario se pueden dessincronizar, y que alguien puede
+robar un código y usarlo más tarde. Si se responde que sí, se usa TOTP, en donde el código
+cambia cada 30 segundos automáticamente, lo que ofrece mayor protección contra ataques.
 
 2) Se va a mostrar un código QR que se tiene que escanear con la aplicación. En la
 aplicación va a aparecer un código que hay que escribir en la terminal, y hay que verificar
-que el código se marque como correcto
+que el código se marque como correcto. No hay que saltearse este paso para no perder acceso
+a la cuenta.
+
+3) Do you want to disallow multiple uses of the same authentication token? This restricts
+you to one login about every 30s, but it increases your chances to notice or even prevent
+man-in-the-middle attacks (y/n). Normalmente un código TOTP es válido durante 30 segundos.
+Sin esta opción, el mismo código podría usarse varias veces dentro de esa ventana. Alguien
+podría interceptar tu código en el momento en que lo enviás y reutilizarlo inmediatamente
+para autenticarse él también antes de que expire. Con la opción activada, cada código solo
+se acepta una vez. Si alguien intercepta y reutiliza el código, el sistema lo rechaza
+porque ya fue usado.
+
+4) By default, a new token is generated every 30 seconds by the mobile app. In order to
+compensate for possible time-skew between the client and the server, we allow an extra
+token before and after the current time. This allows for a time skew of up to 30 seconds
+between authentication server and client. If you experience problems with poor time
+synchronization, you can increase the window from its default size of 3 permitted codes
+(one previous code, the current code, the next code) to 17 permitted codes (the 8
+previous codes, the current code, and the 8 next codes). This will permit for a time skew
+of up to 4 minutes between client and server. Do you want to do so? (y/n).
+Conviene responder que no, porque aumenta la probabilidad de que alguien intercepte un
+código y pueda usarlo para ingresar.
+
+5) If the computer that you are logging into isn't hardened against brute-force login
+attempts, you can enable rate-limiting for the authentication module. By default, this
+limits attackers to no more than 3 login attempts every 30s. Do you want to enable
+rate-limiting? (y/n). Responder que sí. Esto hace que sea considerablemente más difícil
+que alguien adivine el código TOTP que aparece en la aplicación.
