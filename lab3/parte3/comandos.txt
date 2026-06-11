@@ -1,0 +1,11 @@
+Para verificar que la conexión fuera correcta, ejecutamos desde vpnserver el comando:
+    nc -l 1234
+y desde la máquina del atacante:
+    nc 10.8.0.1 1234
+
+Después, capturamos el tráfico en la máquina del atacante de dos formas:
+    sudo tcpdump -i tun0 -s 0 -A
+    sudo tcpdump -i ens4 -s 0 -A
+
+En la primera captura, se podía ver el contenido de los mensajes enviados. En la segunda, solo se podían ver segmentos UDP
+sin ningún contenido reconocible.
